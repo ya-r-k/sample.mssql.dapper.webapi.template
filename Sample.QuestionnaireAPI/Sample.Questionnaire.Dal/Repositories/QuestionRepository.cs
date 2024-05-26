@@ -59,11 +59,11 @@ public class QuestionRepository : IQuestionRepository
         return await Connection.QuerySingleOrDefaultAsync<QuestionModel>("", sqlParams);
     }
 
-    public async Task UpdateAsync(long id, QuestionRequestModel model, IDbTransaction transaction = null)
+    public async Task UpdateAsync(QuestionRequestModel model, IDbTransaction transaction = null)
     {
         var sqlParams = new
         {
-            id,
+            id = model.Id,
             quizId = model.QuizId,
             text = model.Text,
             type = model.Type,

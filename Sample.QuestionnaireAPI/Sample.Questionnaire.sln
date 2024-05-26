@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitignore = ..\.gitignore
 	EndProjectSection
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{77829ECE-22A2-44FF-9485-F6885DF848BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{14730182-9162-497C-9F9E-9F9600F48D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14730182-9162-497C-9F9E-9F9600F48D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14730182-9162-497C-9F9E-9F9600F48D42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77829ECE-22A2-44FF-9485-F6885DF848BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77829ECE-22A2-44FF-9485-F6885DF848BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77829ECE-22A2-44FF-9485-F6885DF848BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77829ECE-22A2-44FF-9485-F6885DF848BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{35D0F351-43CB-41DF-84C0-00CAA29A1CE2} = {29490380-6CC6-420C-87B5-08A26D6B4ACF}
 		{D65CC351-DD6F-42E2-9C3F-47A312F929FF} = {29490380-6CC6-420C-87B5-08A26D6B4ACF}
 		{14730182-9162-497C-9F9E-9F9600F48D42} = {29490380-6CC6-420C-87B5-08A26D6B4ACF}
+		{77829ECE-22A2-44FF-9485-F6885DF848BA} = {29490380-6CC6-420C-87B5-08A26D6B4ACF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13F4A673-CE87-4CD1-AAE3-79BC127531D0}

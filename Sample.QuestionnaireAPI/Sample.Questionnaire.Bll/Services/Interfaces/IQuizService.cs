@@ -11,7 +11,7 @@ public interface IQuizService
 
     Task CreateAsync(QuizRequestModel model);
 
-    Task UpdateAsync(long id, QuizRequestModel model);
+    Task UpdateAsync(QuizRequestModel model);
 
     Task DeleteAsync(long id);
 }

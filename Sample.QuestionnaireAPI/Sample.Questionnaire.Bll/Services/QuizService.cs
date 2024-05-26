@@ -13,7 +13,6 @@ public class QuizService(
     IQuestionRepository questionRepository) : IQuizService
 {
     private readonly IDbConnectionFactory connectionFactory = connectionFactory;
-
     private readonly IQuizRepository quizRepository = quizRepository;
     private readonly IQuestionRepository questionRepository = questionRepository;
     
@@ -33,6 +32,8 @@ public class QuizService(
 
             await questionRepository.CreateAsync(question, transaction);
         }
+
+        await transaction.CommitAsync();
     }
 
     public Task DeleteAsync(long id)
@@ -59,7 +60,7 @@ public class QuizService(
         return quizRepository.GetByIdAsync(userId, id);
     }
 
-    public async Task UpdateAsync(long id, QuizRequestModel model)
+    public async Task UpdateAsync(QuizRequestModel model)
     {
         using var connection = connectionFactory.BeginConnectionAsync();
         using var transaction = await connection.BeginTransactionAsync(IsolationLevel.ReadUncommitted);
@@ -67,18 +68,20 @@ public class QuizService(
         quizRepository.Connection = connection;
         questionRepository.Connection = connection;
 
-        await quizRepository.UpdateAsync(id, model, transaction);
+        await quizRepository.UpdateAsync(model, transaction);
 
         foreach (var question in model.Questions)
         {
             if (question.Id > default(long))
             {
-                await questionRepository.UpdateAsync(question.Id, question, transaction);
+                await questionRepository.UpdateAsync(question, transaction);
             }
             else
             {
                 await questionRepository.CreateAsync(question, transaction);
             }
         }
+
+        await transaction.CommitAsync();
     }
 }

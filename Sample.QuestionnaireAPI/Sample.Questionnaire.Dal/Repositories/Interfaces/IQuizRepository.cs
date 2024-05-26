@@ -12,7 +12,7 @@ public interface IQuizRepository : IRepository
 
     Task<long> CreateAsync(QuizRequestModel model, IDbTransaction transaction = null);
 
-    Task UpdateAsync(long id, QuizRequestModel model, IDbTransaction transaction = null);
+    Task UpdateAsync(QuizRequestModel model, IDbTransaction transaction = null);
 
     Task DeleteAsync(long id);
 }

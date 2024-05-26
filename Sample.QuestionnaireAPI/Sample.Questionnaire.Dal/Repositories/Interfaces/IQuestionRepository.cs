@@ -12,7 +12,7 @@ public interface IQuestionRepository : IRepository
 
     Task<long> CreateAsync(QuestionRequestModel model, IDbTransaction transaction = null);
 
-    Task UpdateAsync(long id, QuestionRequestModel model, IDbTransaction transaction = null);
+    Task UpdateAsync(QuestionRequestModel model, IDbTransaction transaction = null);
 
     Task DeleteAsync(long id);
 }

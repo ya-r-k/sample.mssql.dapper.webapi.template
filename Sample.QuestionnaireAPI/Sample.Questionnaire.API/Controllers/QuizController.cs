@@ -38,9 +38,9 @@ public class QuizController(IQuizService quizService) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(long id, [FromBody] QuizRequestModel model)
+    public async Task<IActionResult> Put([FromBody] QuizRequestModel model)
     {
-        await quizService.UpdateAsync(id, model);
+        await quizService.UpdateAsync(model);
 
         return NoContent();
     }

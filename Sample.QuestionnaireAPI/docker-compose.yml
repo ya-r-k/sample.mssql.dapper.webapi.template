@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  sample.questionnaire.api:
+    image: ${DOCKER_REGISTRY-}samplequestionnaireapi
+    build:
+      context: .
+      dockerfile: Sample.Questionnaire.API/Dockerfile

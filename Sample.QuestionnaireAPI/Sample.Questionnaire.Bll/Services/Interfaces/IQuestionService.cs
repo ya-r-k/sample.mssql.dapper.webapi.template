@@ -11,7 +11,7 @@ public interface IQuestionService
 
     Task CreateAsync(QuestionRequestModel model);
 
-    Task UpdateAsync(long id, QuestionRequestModel model);
+    Task UpdateAsync(QuestionRequestModel model);
 
     Task DeleteAsync(long id);
 }

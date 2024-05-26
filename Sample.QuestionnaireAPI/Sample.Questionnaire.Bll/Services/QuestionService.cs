@@ -11,7 +11,6 @@ public class QuestionService(
     IQuestionRepository questionRepository) : IQuestionService
 {
     private readonly IDbConnectionFactory connectionFactory = connectionFactory;
-
     private readonly IQuestionRepository questionRepository = questionRepository;
 
     public Task CreateAsync(QuestionRequestModel model)
@@ -46,11 +45,11 @@ public class QuestionService(
         return questionRepository.GetByIdAsync(userId, id);
     }
 
-    public Task UpdateAsync(long id, QuestionRequestModel model)
+    public Task UpdateAsync(QuestionRequestModel model)
     {
         using var connection = connectionFactory.BeginConnectionAsync();
         questionRepository.Connection = connection;
 
-        return questionRepository.UpdateAsync(id, model);
+        return questionRepository.UpdateAsync(model);
     }
 }

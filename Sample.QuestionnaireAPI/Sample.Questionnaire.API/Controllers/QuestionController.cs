@@ -37,10 +37,10 @@ public class QuestionController(IQuestionService questionService) : ControllerBa
         return NoContent();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(long id, [FromBody] QuestionRequestModel model)
+    [HttpPut]
+    public async Task<IActionResult> Put([FromBody] QuestionRequestModel model)
     {
-        await questionService.UpdateAsync(id, model);
+        await questionService.UpdateAsync(model);
 
         return NoContent();
     }
