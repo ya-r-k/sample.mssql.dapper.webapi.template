@@ -7,10 +7,10 @@ using Sample.Questionnaire.Dal.Repositories.Interfaces;
 namespace Sample.Questionnaire.Bll.Services;
 
 public class QuestionService(
-    DbConnectionFactory connectionFactory,
+    IDbConnectionFactory connectionFactory,
     IQuestionRepository questionRepository) : IQuestionService
 {
-    private readonly DbConnectionFactory connectionFactory = connectionFactory;
+    private readonly IDbConnectionFactory connectionFactory = connectionFactory;
 
     private readonly IQuestionRepository questionRepository = questionRepository;
 

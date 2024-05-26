@@ -8,11 +8,11 @@ using System.Data;
 namespace Sample.Questionnaire.Bll.Services;
 
 public class QuizService(
-    DbConnectionFactory connectionFactory, 
+    IDbConnectionFactory connectionFactory, 
     IQuizRepository quizRepository,
     IQuestionRepository questionRepository) : IQuizService
 {
-    private readonly DbConnectionFactory connectionFactory = connectionFactory;
+    private readonly IDbConnectionFactory connectionFactory = connectionFactory;
 
     private readonly IQuizRepository quizRepository = quizRepository;
     private readonly IQuestionRepository questionRepository = questionRepository;

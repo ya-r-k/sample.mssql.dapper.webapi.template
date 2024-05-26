@@ -12,18 +12,18 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(this IServiceCollection services, string connectionString)
     {
-        services.AddScoped<IQuestionService, QuestionService>();
-        services.AddScoped<IQuizService, QuizService>();
-
-        services.AddScoped<IQuestionRepository, QuestionRepository>();
-        services.AddScoped<IQuizRepository, QuizRepository>();
-
-        services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-
         services.AddSingleton(new DbConfigs
         {
             ConnectionString = connectionString,
         });
+
+        services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<IQuizRepository, QuizRepository>();
+
+        services.AddScoped<IQuestionService, QuestionService>();
+        services.AddScoped<IQuizService, QuizService>();
 
         return services;
     }
