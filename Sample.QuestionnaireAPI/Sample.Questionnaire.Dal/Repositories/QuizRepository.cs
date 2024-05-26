@@ -2,6 +2,7 @@
 using Sample.Questionnaire.Common.RequestModels;
 using Sample.Questionnaire.Common.ResponseModels;
 using Sample.Questionnaire.Dal.Repositories.Interfaces;
+using Sample.Questionnaire.Dal.Sql;
 using System.Data;
 using System.Data.Common;
 
@@ -20,7 +21,7 @@ public class QuizRepository : IQuizRepository
             createdAt = model.CreatedAt,
         };
 
-        return await Connection.ExecuteScalarAsync<long>("", sqlParams, transaction);
+        return await Connection.ExecuteScalarAsync<long>(QuizSqlScripts.Create, sqlParams, transaction);
     }
 
     public async Task DeleteAsync(long id)
@@ -30,7 +31,7 @@ public class QuizRepository : IQuizRepository
             id,
         };
 
-        await Connection.ExecuteAsync("", sqlParams);
+        await Connection.ExecuteAsync(QuizSqlScripts.Delete, sqlParams);
     }
 
     public async Task<IEnumerable<QuizPreviewModel>> GetByAsync(int? userId, GetQuizzesByQuery query)
@@ -43,7 +44,7 @@ public class QuizRepository : IQuizRepository
             pageSize = query.PageSize,
         };
 
-        return await Connection.QueryAsync<QuizPreviewModel>("", sqlParams);
+        return await Connection.QueryAsync<QuizPreviewModel>(QuizSqlScripts.GetBy, sqlParams);
     }
 
     public async Task<QuizDetailsModel> GetByIdAsync(int? userId, long id)
@@ -54,19 +55,19 @@ public class QuizRepository : IQuizRepository
             id,
         };
 
-        return await Connection.QuerySingleOrDefaultAsync<QuizDetailsModel>("", sqlParams);
+        return await Connection.QuerySingleOrDefaultAsync<QuizDetailsModel>(QuizSqlScripts.GetById, sqlParams);
     }
 
-    public async Task UpdateAsync(long id, QuizRequestModel model, IDbTransaction transaction = null)
+    public async Task UpdateAsync(QuizRequestModel model, IDbTransaction transaction = null)
     {
         var sqlParams = new
         {
-            id,
+            id = model.Id,
             name = model.Name,
             description = model.Description,
             createdAt = model.CreatedAt,
         };
 
-        await Connection.ExecuteAsync("", sqlParams, transaction);
+        await Connection.ExecuteAsync(QuizSqlScripts.Update, sqlParams, transaction);
     }
 }

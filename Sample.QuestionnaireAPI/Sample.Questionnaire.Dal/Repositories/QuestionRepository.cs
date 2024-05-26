@@ -2,6 +2,7 @@
 using Sample.Questionnaire.Common.RequestModels;
 using Sample.Questionnaire.Common.ResponseModels;
 using Sample.Questionnaire.Dal.Repositories.Interfaces;
+using Sample.Questionnaire.Dal.Sql;
 using System.Data;
 using System.Data.Common;
 
@@ -21,7 +22,7 @@ public class QuestionRepository : IQuestionRepository
             complexity = model.Complexity,
         };
 
-        return await Connection.ExecuteScalarAsync<long>("", sqlParams, transaction);
+        return await Connection.ExecuteScalarAsync<long>(QuestionSqlScripts.Create, sqlParams, transaction);
     }
 
     public async Task DeleteAsync(long id)
@@ -31,7 +32,7 @@ public class QuestionRepository : IQuestionRepository
             id,
         };
 
-        await Connection.ExecuteAsync("", sqlParams);
+        await Connection.ExecuteAsync(QuestionSqlScripts.Delete, sqlParams);
     }
 
     public async Task<IEnumerable<QuestionModel>> GetByAsync(int? userId, GetQuestionsByQuery query)
@@ -45,7 +46,7 @@ public class QuestionRepository : IQuestionRepository
             pageSize = query.PageSize,
         };
 
-        return await Connection.QueryAsync<QuestionModel>("", sqlParams);
+        return await Connection.QueryAsync<QuestionModel>(QuestionSqlScripts.GetBy, sqlParams);
     }
 
     public async Task<QuestionModel> GetByIdAsync(int? userId, long id)
@@ -56,7 +57,7 @@ public class QuestionRepository : IQuestionRepository
             id,
         };
 
-        return await Connection.QuerySingleOrDefaultAsync<QuestionModel>("", sqlParams);
+        return await Connection.QuerySingleOrDefaultAsync<QuestionModel>(QuestionSqlScripts.GetById, sqlParams);
     }
 
     public async Task UpdateAsync(QuestionRequestModel model, IDbTransaction transaction = null)
@@ -70,6 +71,6 @@ public class QuestionRepository : IQuestionRepository
             complexity = model.Complexity,
         };
 
-        await Connection.ExecuteAsync("", sqlParams, transaction);
+        await Connection.ExecuteAsync(QuestionSqlScripts.Update, sqlParams, transaction);
     }
 }

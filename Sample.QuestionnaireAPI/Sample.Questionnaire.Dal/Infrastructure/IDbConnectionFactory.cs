@@ -5,5 +5,5 @@ namespace Sample.Questionnaire.Dal.Infrastructure;
 
 public interface IDbConnectionFactory
 {
-    DbConnection BeginConnectionAsync();
+    Task<DbConnection> BeginConnectionAsync();
 }

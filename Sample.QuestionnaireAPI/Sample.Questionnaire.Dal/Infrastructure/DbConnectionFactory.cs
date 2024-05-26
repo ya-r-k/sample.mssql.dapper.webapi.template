@@ -8,8 +8,11 @@ public class DbConnectionFactory(DbConfigs configs) : IDbConnectionFactory
 {
     private readonly DbConfigs configs = configs;
 
-    public DbConnection BeginConnectionAsync()
+    public async Task<DbConnection> BeginConnectionAsync()
     {
-        return new SqlConnection(configs.ConnectionString);
+        var connection = new SqlConnection(configs.ConnectionString);
+        await connection.OpenAsync();
+
+        return connection;
     }
 }

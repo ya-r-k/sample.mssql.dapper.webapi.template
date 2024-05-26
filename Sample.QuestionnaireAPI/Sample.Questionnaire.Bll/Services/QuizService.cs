@@ -18,7 +18,7 @@ public class QuizService(
     
     public async Task CreateAsync(QuizRequestModel model)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         using var transaction = await connection.BeginTransactionAsync(IsolationLevel.ReadUncommitted);
 
         quizRepository.Connection = connection;
@@ -36,33 +36,33 @@ public class QuizService(
         await transaction.CommitAsync();
     }
 
-    public Task DeleteAsync(long id)
+    public async Task DeleteAsync(long id)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         quizRepository.Connection = connection;
 
-        return quizRepository.DeleteAsync(id);
+        await quizRepository.DeleteAsync(id);
     }
 
-    public Task<IEnumerable<QuizPreviewModel>> GetByAsync(int? userId, GetQuizzesByQuery query)
+    public async Task<IEnumerable<QuizPreviewModel>> GetByAsync(int? userId, GetQuizzesByQuery query)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         quizRepository.Connection = connection;
 
-        return quizRepository.GetByAsync(userId, query);
+        return await quizRepository.GetByAsync(userId, query);
     }
 
-    public Task<QuizDetailsModel> GetByIdAsync(int? userId, long id)
+    public async Task<QuizDetailsModel> GetByIdAsync(int? userId, long id)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         quizRepository.Connection = connection;
 
-        return quizRepository.GetByIdAsync(userId, id);
+        return await quizRepository.GetByIdAsync(userId, id);
     }
 
     public async Task UpdateAsync(QuizRequestModel model)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         using var transaction = await connection.BeginTransactionAsync(IsolationLevel.ReadUncommitted);
 
         quizRepository.Connection = connection;

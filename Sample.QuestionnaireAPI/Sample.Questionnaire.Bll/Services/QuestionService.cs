@@ -13,43 +13,43 @@ public class QuestionService(
     private readonly IDbConnectionFactory connectionFactory = connectionFactory;
     private readonly IQuestionRepository questionRepository = questionRepository;
 
-    public Task CreateAsync(QuestionRequestModel model)
+    public async Task CreateAsync(QuestionRequestModel model)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         questionRepository.Connection = connection;
 
-        return questionRepository.CreateAsync(model);
+        await questionRepository.CreateAsync(model);
     }
 
-    public Task DeleteAsync(long id)
+    public async Task DeleteAsync(long id)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         questionRepository.Connection = connection;
 
-        return questionRepository.DeleteAsync(id);
+        await questionRepository.DeleteAsync(id);
     }
 
-    public Task<IEnumerable<QuestionModel>> GetByAsync(int? userId, GetQuestionsByQuery query)
+    public async Task<IEnumerable<QuestionModel>> GetByAsync(int? userId, GetQuestionsByQuery query)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         questionRepository.Connection = connection;
 
-        return questionRepository.GetByAsync(userId, query);
+        return await questionRepository.GetByAsync(userId, query);
     }
 
-    public Task<QuestionModel> GetByIdAsync(int? userId, long id)
+    public async Task<QuestionModel> GetByIdAsync(int? userId, long id)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         questionRepository.Connection = connection;
 
-        return questionRepository.GetByIdAsync(userId, id);
+        return await questionRepository.GetByIdAsync(userId, id);
     }
 
-    public Task UpdateAsync(QuestionRequestModel model)
+    public async Task UpdateAsync(QuestionRequestModel model)
     {
-        using var connection = connectionFactory.BeginConnectionAsync();
+        using var connection = await connectionFactory.BeginConnectionAsync();
         questionRepository.Connection = connection;
 
-        return questionRepository.UpdateAsync(model);
+        await questionRepository.UpdateAsync(model);
     }
 }
