@@ -1,33 +1,72 @@
-﻿using Sample.Questionnaire.Common.RequestModels;
+﻿using Dapper;
+using Sample.Questionnaire.Common.RequestModels;
 using Sample.Questionnaire.Common.ResponseModels;
 using Sample.Questionnaire.Dal.Repositories.Interfaces;
+using System.Data;
+using System.Data.Common;
 
 namespace Sample.Questionnaire.Dal.Repositories;
 
 public class QuizRepository : IQuizRepository
 {
-    public Task CreateAsync(QuizRequestModel model)
+    public DbConnection Connection { get; set; }
+
+    public async Task<long> CreateAsync(QuizRequestModel model, IDbTransaction transaction = null)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            name = model.Name,
+            description = model.Description,
+            createdAt = model.CreatedAt,
+        };
+
+        return await Connection.ExecuteScalarAsync<long>("", sqlParams, transaction);
     }
 
-    public Task DeleteAsync(long id)
+    public async Task DeleteAsync(long id)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            id,
+        };
+
+        await Connection.ExecuteAsync("", sqlParams);
     }
 
-    public Task<IEnumerable<QuizPreviewModel>> GetByAsync(int? userId, GetQuizzesByQuery query)
+    public async Task<IEnumerable<QuizPreviewModel>> GetByAsync(int? userId, GetQuizzesByQuery query)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            userId,
+            name = query.Name,
+            lastViewedId = query.LastViewedId,
+            pageSize = query.PageSize,
+        };
+
+        return await Connection.QueryAsync<QuizPreviewModel>("", sqlParams);
     }
 
-    public Task<QuizDetailsModel> GetByIdAsync(int? userId, long id)
+    public async Task<QuizDetailsModel> GetByIdAsync(int? userId, long id)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            userId,
+            id,
+        };
+
+        return await Connection.QuerySingleOrDefaultAsync<QuizDetailsModel>("", sqlParams);
     }
 
-    public Task UpdateAsync(long id, QuizRequestModel model)
+    public async Task UpdateAsync(long id, QuizRequestModel model, IDbTransaction transaction = null)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            id,
+            name = model.Name,
+            description = model.Description,
+            createdAt = model.CreatedAt,
+        };
+
+        await Connection.ExecuteAsync("", sqlParams, transaction);
     }
 }

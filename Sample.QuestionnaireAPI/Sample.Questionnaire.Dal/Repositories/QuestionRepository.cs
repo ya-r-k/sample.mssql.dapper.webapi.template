@@ -1,33 +1,75 @@
-﻿using Sample.Questionnaire.Common.RequestModels;
+﻿using Dapper;
+using Sample.Questionnaire.Common.RequestModels;
 using Sample.Questionnaire.Common.ResponseModels;
 using Sample.Questionnaire.Dal.Repositories.Interfaces;
+using System.Data;
+using System.Data.Common;
 
 namespace Sample.Questionnaire.Dal.Repositories;
 
 public class QuestionRepository : IQuestionRepository
 {
-    public Task CreateAsync(QuestionRequestModel model)
+    public DbConnection Connection { get; set; }
+
+    public async Task<long> CreateAsync(QuestionRequestModel model, IDbTransaction transaction = null)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            quizId = model.QuizId,
+            text = model.Text,
+            type = model.Type,
+            complexity = model.Complexity,
+        };
+
+        return await Connection.ExecuteScalarAsync<long>("", sqlParams, transaction);
     }
 
-    public Task DeleteAsync(long id)
+    public async Task DeleteAsync(long id)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            id,
+        };
+
+        await Connection.ExecuteAsync("", sqlParams);
     }
 
-    public Task<IEnumerable<QuestionModel>> GetByAsync(int? userId, GetQuestionsByQuery query)
+    public async Task<IEnumerable<QuestionModel>> GetByAsync(int? userId, GetQuestionsByQuery query)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            userId,
+            name = query.QuizId,
+            type = query.Type,
+            lastViewedId = query.LastViewedId,
+            pageSize = query.PageSize,
+        };
+
+        return await Connection.QueryAsync<QuestionModel>("", sqlParams);
     }
 
-    public Task<QuestionModel> GetByIdAsync(int? userId, long id)
+    public async Task<QuestionModel> GetByIdAsync(int? userId, long id)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            userId,
+            id,
+        };
+
+        return await Connection.QuerySingleOrDefaultAsync<QuestionModel>("", sqlParams);
     }
 
-    public Task UpdateAsync(long id, QuestionRequestModel model)
+    public async Task UpdateAsync(long id, QuestionRequestModel model, IDbTransaction transaction = null)
     {
-        throw new NotImplementedException();
+        var sqlParams = new
+        {
+            id,
+            quizId = model.QuizId,
+            text = model.Text,
+            type = model.Type,
+            complexity = model.Complexity,
+        };
+
+        await Connection.ExecuteAsync("", sqlParams, transaction);
     }
 }

@@ -9,4 +9,6 @@ public class QuestionModel
     public int Type { get; set; }
 
     public int Complexity { get; set; }
+
+    public IEnumerable<QuestionOptionModel> Options { get; set; }
 }

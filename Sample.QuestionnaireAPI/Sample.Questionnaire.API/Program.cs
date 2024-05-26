@@ -1,9 +1,7 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.OpenApi.Models;
 using Prometheus;
 using Sample.Questionnaire.Di;
 using Serilog;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var isRunningInContainer = bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var result) && result;
@@ -27,7 +25,7 @@ builder.Services.AddSwaggerGen();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
-builder.Services.AddServices();
+builder.Services.AddServices(connectionString);
 
 builder.Services.AddHealthChecks()
     .AddSqlServer(connectionString, timeout: TimeSpan.FromSeconds(5))
