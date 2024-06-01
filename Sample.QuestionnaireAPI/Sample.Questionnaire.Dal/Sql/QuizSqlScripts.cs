@@ -11,16 +11,27 @@ internal static class QuizSqlScripts
         DELETE FROM Quiz
         WHERE Id = @id";
 
-    internal const string GetBy = @"
-        SELECT TOP(@pageSize) Id, Name, Description, CreatedAt
-        FROM Quiz
-        WHERE Id > @lastViewedId
+    internal const string GetByFirstPage = @"
+        SELECT TOP(@pageSize) 
+            q.Id, Name, Description, CreatedAt, 
+            (SELECT COUNT(*) FROM Question WHERE QuizId = q.Id) AS QuestionsCount
+        FROM Quiz q
+        ORDER BY Id ASC";
+
+    internal const string GetByPage = @"
+        SELECT TOP(@pageSize) 
+            q.Id, Name, Description, CreatedAt, 
+            (SELECT COUNT(*) FROM Question WHERE QuizId = q.Id) AS QuestionsCount
+        FROM Quiz q
+        WHERE q.Id > @lastViewedId
         ORDER BY Id ASC";
 
     internal const string GetById = @"
-        SELECT Id, Name, Description, CreatedAt
-        FROM Quiz
-        WHERE Id = @id";
+        SELECT TOP(@pageSize) 
+            q.Id, q.Name, q.Description, q.CreatedAt,
+            (SELECT COUNT(*) FROM Question WHERE QuizId = q.Id) AS QuestionsCount
+        FROM Quiz q
+        WHERE q.Id = @id";
 
     internal const string Update = @"
         UPDATE Quiz

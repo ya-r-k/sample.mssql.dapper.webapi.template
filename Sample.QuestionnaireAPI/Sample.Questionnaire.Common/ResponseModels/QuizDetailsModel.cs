@@ -10,5 +10,7 @@ public class QuizDetailsModel
 
     public DateTime CreatedAt { get; set; }
 
+    public int QuestionsCount { get; set; }
+
     public IEnumerable<long> QuestionsIds { get; set; }
 }

@@ -23,7 +23,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddServices(connectionString);
 
@@ -69,8 +68,6 @@ app.UseHttpsRedirection();
 app.UseMetricServer();
 app.UseHttpMetrics();
 
-app.UseStaticFiles();
-
 app.UseCors();
 
 app.UseRouting();
@@ -79,8 +76,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
 app.MapMetrics();
 app.MapHealthChecks("/health");
 

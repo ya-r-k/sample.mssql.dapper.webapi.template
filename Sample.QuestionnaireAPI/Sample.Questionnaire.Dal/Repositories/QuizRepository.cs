@@ -44,7 +44,11 @@ public class QuizRepository : IQuizRepository
             pageSize = query.PageSize,
         };
 
-        return await Connection.QueryAsync<QuizPreviewModel>(QuizSqlScripts.GetBy, sqlParams);
+        var sqlQuery = query.LastViewedId is null
+            ? QuizSqlScripts.GetByFirstPage
+            : QuizSqlScripts.GetByPage;
+
+        return await Connection.QueryAsync<QuizPreviewModel>(sqlQuery, sqlParams);
     }
 
     public async Task<QuizDetailsModel> GetByIdAsync(int? userId, long id)

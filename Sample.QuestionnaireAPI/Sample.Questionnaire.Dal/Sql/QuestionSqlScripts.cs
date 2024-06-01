@@ -11,7 +11,12 @@ internal static class QuestionSqlScripts
         DELETE FROM Question
         WHERE Id = @id";
 
-    internal const string GetBy = @"
+    internal const string GetByFirstPage = @"
+        SELECT TOP(@pageSize) Id, Text, Type, Complexity
+        FROM Question
+        ORDER BY Id ASC";
+
+    internal const string GetByPage = @"
         SELECT TOP(@pageSize) Id, Text, Type, Complexity
         FROM Question
         WHERE Id > @lastViewedId

@@ -9,4 +9,6 @@ public class QuizPreviewModel
     public string Description { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public int QuestionsCount { get; set; }
 }

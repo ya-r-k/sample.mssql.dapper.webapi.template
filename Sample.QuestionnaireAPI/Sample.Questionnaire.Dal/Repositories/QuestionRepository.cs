@@ -46,7 +46,11 @@ public class QuestionRepository : IQuestionRepository
             pageSize = query.PageSize,
         };
 
-        return await Connection.QueryAsync<QuestionModel>(QuestionSqlScripts.GetBy, sqlParams);
+        var sqlQuery = query.LastViewedId is null
+            ? QuestionSqlScripts.GetByFirstPage
+            : QuestionSqlScripts.GetByPage;
+
+        return await Connection.QueryAsync<QuestionModel>(sqlQuery, sqlParams);
     }
 
     public async Task<QuestionModel> GetByIdAsync(int? userId, long id)

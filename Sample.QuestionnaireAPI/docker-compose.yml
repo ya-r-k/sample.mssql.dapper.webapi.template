@@ -1,8 +1,30 @@
-version: '3.4'
-
 services:
-  sample.questionnaire.api:
-    image: ${DOCKER_REGISTRY-}samplequestionnaireapi
+  questionnaire.api:
+    container_name: questionnaire.api
+    image: ${DOCKER_REGISTRY-}questionnaire.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5008
+      - ASPNETCORE_HTTPS_PORTS=7141
+    ports:
+      - 5008:5008
+      - 7141:7141
     build:
       context: .
       dockerfile: Sample.Questionnaire.API/Dockerfile
+    volumes:
+      - ../logs:/logs/samples/questionnaire.api
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
+
+  mssql.db:
+    container_name: mssql.db
+    image: ${DOCKER_REGISTRY-}mssql.db
+    environment:
+      SA_PASSWORD: '#&E*ye76t&#YGet8q7#*&YTtw8qytt&E7t378ET78etW*87'
+      ACCEPT_EULA: 'Y'
+    ports:
+      - 1433:1433
+    build:
+      context: ../../my-sqlproj-database-template/Sample.Database
+      dockerfile: Sample.Database/Dockerfile

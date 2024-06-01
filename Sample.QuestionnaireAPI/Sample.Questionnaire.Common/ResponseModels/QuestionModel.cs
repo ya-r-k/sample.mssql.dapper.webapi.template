@@ -1,4 +1,6 @@
-﻿namespace Sample.Questionnaire.Common.ResponseModels;
+﻿using Sample.Questionnaire.Common.Enums;
+
+namespace Sample.Questionnaire.Common.ResponseModels;
 
 public class QuestionModel
 {
@@ -6,7 +8,7 @@ public class QuestionModel
 
     public string Text { get; set; }
 
-    public int Type { get; set; }
+    public QuestionType Type { get; set; }
 
     public int Complexity { get; set; }
 
