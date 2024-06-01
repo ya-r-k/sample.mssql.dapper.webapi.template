@@ -26,7 +26,7 @@ services:
     ports:
       - 1433:1433
     build:
-      context: ../../my-sqlproj-database-template/Sample.Database
+      context: ../../sample.mssql.sqlproj.template/Sample.Database
       dockerfile: Sample.Database/Dockerfile
 
   prometheus:
@@ -50,8 +50,8 @@ services:
       - ./grafana-data:/var/lib/grafana
 
   node-exporter:
-    image: quay.io/prometheus/node-exporter:latest
     container_name: node-exporter
+    image: quay.io/prometheus/node-exporter:latest
     ports:
       - 9100:9100
     volumes:
