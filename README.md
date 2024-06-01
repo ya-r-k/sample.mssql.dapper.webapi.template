@@ -18,6 +18,8 @@ dotnet dev-certs https --trust
 > Note: The certificate name, in this case Sample.Questionnaire.API.pfx must match the project assembly name.
 
 > Note: If console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. It can be exported using MMC Console.
+> - How to export .pfx certificate using Microsoft Management Console (MMC) (c-sharpcorner.com) - https://www.c-sharpcorner.com/article/how-to-export-pfx-certificate-using-microsoft-management-console-mmc/
+> - How to generate .pfx certificate using Microsoft Management Console (MMC) (c-sharpcorner.com) - https://www.c-sharpcorner.com/article/how-to-generate-pfx-certificate-using-microsoft-management-console-mmc/
 
 Configure application secrets, for the certificate:
 
