@@ -1,4 +1,4 @@
-# my-web-api-plus-mssql-plus-dapper-template
+# sample.mssql.dapper.webapi.template
 
 The following example uses PowerShell.
 
