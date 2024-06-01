@@ -13,7 +13,7 @@ services:
       context: .
       dockerfile: Sample.Questionnaire.API/Dockerfile
     volumes:
-      - ../logs:/logs/samples/questionnaire.api
+      - ./logs:/logs/samples/questionnaire
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
 
@@ -28,3 +28,38 @@ services:
     build:
       context: ../../my-sqlproj-database-template/Sample.Database
       dockerfile: Sample.Database/Dockerfile
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ../prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus-data:/prometheus
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - 9100:9100
+    volumes:
+      - /proc:/host/proc:ro # Mount the proc directory from the host
+      - /sys:/host/sys:ro # Mount the sys directory from the host
+      - /:/rootfs:ro # Mount the root filesystem from the host
+    command:
+      - '--path.procfs=/host/proc' # Path to the procfs directory
+      - '--path.rootfs=/rootfs' # Path to the root filesystem
+      - '--path.sysfs=/host/sys' # Path to the sysfs directory
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)' # Exclude certain filesystem mount points from collection
